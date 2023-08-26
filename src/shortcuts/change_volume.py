@@ -34,6 +34,7 @@ class ChangeVolume(Expression):
 
     @staticmethod
     def set_volume(volume: int):
+        """Set system volume."""
         all_devices = AudioUtilities.GetAllDevices()
         for device in all_devices:
             interface = device.EndpointVolume.QueryInterface(IAudioEndpointVolume)
