@@ -1,6 +1,7 @@
 from shortcuts import Expression
 from typing import Any
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+import ctypes
 
 
 MIN_VOLUME = 0
@@ -23,7 +24,6 @@ class ChangeVolume(Expression):
             raise TypeError("Desired volume must be an integer")
         if desired_volume > MAX_VOLUME or desired_volume < MIN_VOLUME:
             raise ValueError(f"Desired volume must be between {MIN_VOLUME} and {MAX_VOLUME}")
-        print(f"set volume to {desired_volume}")
         ChangeVolume.set_volume(desired_volume)
 
     @staticmethod
@@ -35,6 +35,9 @@ class ChangeVolume(Expression):
     @staticmethod
     def set_volume(volume: int):
         """Set system volume."""
+
+        ctypes.windll.ole32.CoInitialize(0)
+
         all_devices = AudioUtilities.GetAllDevices()
         for device in all_devices:
             interface = device.EndpointVolume.QueryInterface(IAudioEndpointVolume)
