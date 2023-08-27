@@ -22,10 +22,10 @@ class WindowMgr:
 
     def _window_enum_callback(self, hwnd, wildcard):
         """Pass to win32gui.EnumWindows() to check all the opened windows"""
-        if re.match(wildcard, str(win32gui.GetWindowText(hwnd))) is not None:
+        if wildcard.lower() in str(win32gui.GetWindowText(hwnd)).lower():
             self._handle = hwnd
 
-    def find_window_wildcard(self, wildcard):
+    def find_window_by_name(self, wildcard):
         """find a window whose title matches the wildcard regex"""
         self._handle = None
         win32gui.EnumWindows(self._window_enum_callback, wildcard)
@@ -37,3 +37,6 @@ class WindowMgr:
         shell.SendKeys('%')  # left shift key sent, this shifts focus from current window
         win32gui.SetForegroundWindow(self._handle)
         win32gui.ShowWindow(self._handle, SW_NORMAL)
+
+    def close_window(self):
+        win32gui.CloseWindow(self._handle)

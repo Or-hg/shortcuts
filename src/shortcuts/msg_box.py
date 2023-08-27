@@ -3,6 +3,9 @@ from typing import Any
 from easygui import msgbox
 
 
+TITLE = "shortcut message"
+
+
 class MsgBox(Expression):
     """Create a popup message box."""
 
@@ -11,4 +14,4 @@ class MsgBox(Expression):
 
     def execute(self, context: Any = None) -> Any:
         """Create the message box."""
-        msgbox(self.msg.execute(context), title="shortcut message", ok_button="Ok")
+        msgbox(self.msg.execute(context), title=TITLE)
