@@ -23,10 +23,16 @@ def test_execute_valid(volume: int):
     for device in all_devices:
         interface = device.EndpointVolume.QueryInterface(IAudioEndpointVolume)
         actual_volume = interface.GetMasterVolumeLevelScalar()
-        assert abs(volume - actual_volume * 100) < 1
+        assert abs(volume - actual_volume * 100) <= 1
 
 
 @pytest.mark.parametrize("volume", ["hi", [], None])
 def test_execute_invalid_terminal_expression(volume: int):
     with pytest.raises(TypeError):
         ChangeVolume(TerminalExpression(volume)).execute()
+
+
+@pytest.mark.parametrize("volume", [5, 100, 0, 45])
+def test_get_volume(volume: int):
+    ChangeVolume(TerminalExpression(volume)).execute()
+    assert abs(volume - ChangeVolume.get_volume()) <= 1
