@@ -1,7 +1,6 @@
-import re
-import win32gui
 import win32com.client
 from win32con import SW_NORMAL
+import psutil, win32process, win32gui
 
 
 class WindowMgr:
@@ -40,3 +39,9 @@ class WindowMgr:
 
     def close_window(self):
         win32gui.CloseWindow(self._handle)
+
+    @staticmethod
+    def get_active_window_process_name():
+        pid = win32process.GetWindowThreadProcessId(win32gui.GetForegroundWindow())  # This produces a list of PIDs active window relates to
+        return psutil.Process(pid[-1]).name()  # pid[-1] is the most likely to survive last longer
+

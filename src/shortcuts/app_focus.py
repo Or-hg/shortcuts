@@ -1,6 +1,6 @@
-from shortcuts import Expression
+from shortcuts import Expression, WindowMgr
 from typing import Any
-from win32gui import GetWindowText, GetForegroundWindow
+from win32gui import GetWindowText, GetForegroundWindow, GetClassName
 from time import sleep
 import threading
 
@@ -21,10 +21,10 @@ class AppFocus(Expression):
     def handle_focus(self, context: Any = None) -> Any:
         """When the app is focused, execute action."""
         while True:
-            while self.app_name.lower() not in GetWindowText(GetForegroundWindow()).lower():
+            while self.app_name.lower() not in WindowMgr.get_active_window_process_name().lower():
                 sleep(SLEEP)
 
             self.action.execute(context)
 
-            while self.app_name.lower() in GetWindowText(GetForegroundWindow()).lower():
+            while self.app_name.lower() in WindowMgr.get_active_window_process_name().lower():
                 sleep(SLEEP)
