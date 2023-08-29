@@ -7,3 +7,4 @@ from .msg_box import MsgBox, TITLE as MSG_BOX_TITLE
 from .open_app import OpenApp
 from .close_app import CloseApp
 from .if_statement import If
+from .window_focus import WindowFocus

@@ -1,6 +1,7 @@
 import win32com.client
 from win32con import SW_NORMAL
 import psutil, win32process, win32gui
+from win32gui import GetWindowText, GetForegroundWindow
 
 
 class WindowMgr:
@@ -44,4 +45,8 @@ class WindowMgr:
     def get_active_window_process_name():
         pid = win32process.GetWindowThreadProcessId(win32gui.GetForegroundWindow())  # This produces a list of PIDs active window relates to
         return psutil.Process(pid[-1]).name()  # pid[-1] is the most likely to survive last longer
+
+    @staticmethod
+    def get_active_window_name():
+        return GetWindowText(GetForegroundWindow())
 

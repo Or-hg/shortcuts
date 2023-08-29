@@ -1,11 +1,12 @@
 import time
 
-from shortcuts import AppFocus, TerminalExpression, ChangeVolume, MsgBox, OpenApp, CloseApp, If
+from shortcuts import AppFocus, TerminalExpression, ChangeVolume, MsgBox, WindowFocus
 
 VOLUME = 12
 
 time.sleep(3)
 
-# AppFocus("spotify", ChangeVolume(TerminalExpression(VOLUME))).execute()
+AppFocus("spotify", ChangeVolume(TerminalExpression(VOLUME))).execute()
 
-If(TerminalExpression(True), MsgBox(TerminalExpression("hi"))).execute()
+WindowFocus("youtube", ChangeVolume(TerminalExpression(VOLUME))).execute()
+
