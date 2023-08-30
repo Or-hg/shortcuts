@@ -8,3 +8,4 @@ from .open_app import OpenApp
 from .close_app import CloseApp
 from .if_statement import If
 from .window_focus import WindowFocus
+from .whatsapp_message import WhatsappMessage
