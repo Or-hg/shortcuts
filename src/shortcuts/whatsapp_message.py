@@ -19,8 +19,6 @@ class WhatsappMessage(Expression):
 
         main_dlg = app.WhatsApp
 
-        # main_dlg.print_control_identifiers()
-
         sleep(SLEEP)
         main_dlg.type_keys('^(f)')
         sleep(SLEEP)

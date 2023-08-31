@@ -12,7 +12,7 @@ class WindowMgr:
          - https://stackoverflow.com/questions/14295337/win32gui-setactivewindow-error-the-specified-procedure-could-not-be-found
     """
 
-    def __init__ (self):
+    def __init__(self):
         self._handle = None
 
     def find_window(self, class_name, window_name=None):
@@ -24,6 +24,7 @@ class WindowMgr:
         """Pass to win32gui.EnumWindows() to check all the opened windows"""
         if wildcard.lower() in str(win32gui.GetWindowText(hwnd)).lower():
             self._handle = hwnd
+            return
 
     def find_window_by_name(self, wildcard):
         """find a window whose title matches the wildcard regex"""

@@ -8,7 +8,7 @@ SLEEP = 1
 
 
 class WindowFocus(Expression):
-    def __init__(self, window_name: str, action: Expression):
+    def __init__(self, window_name: Expression, action: Expression):
         self.window_name = window_name
         self.action = action
 
@@ -19,11 +19,12 @@ class WindowFocus(Expression):
 
     def handle_focus(self, context: Any = None) -> Any:
         """When the app is focused, execute action."""
+        window = self.window_name.execute(context)
         while True:
-            while self.window_name.lower() not in WindowMgr.get_active_window_name().lower():
+            while window.lower() not in WindowMgr.get_active_window_name().lower():
                 sleep(SLEEP)
 
             self.action.execute(context)
 
-            while self.window_name.lower() in WindowMgr.get_active_window_name().lower():
+            while window.lower() in WindowMgr.get_active_window_name().lower():
                 sleep(SLEEP)
