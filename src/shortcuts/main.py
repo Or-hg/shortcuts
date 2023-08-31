@@ -1,6 +1,6 @@
 import time
 
-from shortcuts import AppFocus, TerminalExpression, ChangeVolume, MsgBox, WindowFocus, WhatsappMessage
+from shortcuts import AppFocus, TerminalExpression, ChangeVolume, MsgBox, WindowFocus, WhatsappMessage, IsAppRunning
 
 VOLUME = 12
 

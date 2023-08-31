@@ -9,3 +9,4 @@ from .close_app import CloseApp
 from .if_statement import If
 from .window_focus import WindowFocus
 from .whatsapp_message import WhatsappMessage
+from .is_app_running import IsAppRunning
