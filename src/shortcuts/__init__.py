@@ -14,3 +14,4 @@ from .get_battery import GetBattery
 from .is_computer_plugged import IsComputerPlugged
 from .music_play_pause import MusicPlayPause
 from .open_file import OpenFile
+from .run_file import RunFile
