@@ -1,7 +1,8 @@
 import time
 
 from shortcuts import (AppFocus, TerminalExpression, ChangeVolume, MsgBox,
-                       WindowFocus, WhatsappMessage, IsAppRunning, GetBattery)
+                       WindowFocus, WhatsappMessage, IsAppRunning, GetBattery,
+                       IsComputerPlugged)
 
 VOLUME = 12
 

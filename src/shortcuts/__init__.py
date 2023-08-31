@@ -11,3 +11,4 @@ from .window_focus import WindowFocus
 from .whatsapp_message import WhatsappMessage
 from .is_app_running import IsAppRunning
 from .get_battery import GetBattery
+from .is_computer_plugged import IsComputerPlugged
