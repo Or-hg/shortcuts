@@ -8,9 +8,10 @@ SLEEP = 1
 
 
 class WindowFocus(Expression):
-    def __init__(self, window_name: Expression, action: Expression):
+    def __init__(self, window_name: Expression, action: Expression, blur_action: Expression = None):
         self.window_name = window_name
         self.action = action
+        self.blur_action = blur_action
 
     def execute(self, context: Any = None) -> Any:
         """Execute the handle_focus function in a new thread"""
@@ -24,7 +25,11 @@ class WindowFocus(Expression):
             while window.lower() not in WindowMgr.get_active_window_name().lower():
                 sleep(SLEEP)
 
-            self.action.execute(context)
+            if self.action is not None:
+                self.action.execute(context)
 
             while window.lower() in WindowMgr.get_active_window_name().lower():
                 sleep(SLEEP)
+
+            if self.blur_action is not None:
+                self.blur_action.execute(context)

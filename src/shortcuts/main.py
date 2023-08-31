@@ -12,4 +12,5 @@ AppFocus(TerminalExpression("spotify"), ChangeVolume(TerminalExpression(VOLUME))
 
 WindowFocus(TerminalExpression("youtube"), ChangeVolume(TerminalExpression(VOLUME))).execute()
 
-WindowFocus(TerminalExpression("youtube"), If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause())).execute()
+WindowFocus(TerminalExpression("youtube"), If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause()),
+            If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause())).execute()
