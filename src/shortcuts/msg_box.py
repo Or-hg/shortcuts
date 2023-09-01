@@ -17,6 +17,7 @@ class MsgBox(Expression):
         """Execute the create_msg_box function in a new thread"""
         thread = Thread(target=self.create_msg_box, args=(context,))
         thread.start()
+        return thread
 
     def create_msg_box(self, context: Any = None) -> Any:
         """Create the message box."""

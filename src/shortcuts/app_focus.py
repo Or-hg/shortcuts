@@ -18,6 +18,7 @@ class AppFocus(Expression):
         """Execute the handle_focus function in a new thread"""
         thread = threading.Thread(target=self.handle_focus, args=(context,))
         thread.start()
+        return thread
 
     def handle_focus(self, context: Any = None) -> Any:
         """When the app is focused, execute action."""

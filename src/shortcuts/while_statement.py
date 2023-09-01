@@ -14,6 +14,7 @@ class While(Expression):
         """Execute the loop function in a different thread."""
         thread = Thread(target=self.loop, args=(context,))
         thread.start()
+        return thread
 
     def loop(self, context: Any = None):
         """Execute while loop."""
