@@ -3,8 +3,11 @@ from typing import Any
 import pyautogui
 
 
+SCREENSHOTS_FOLDER = r"C:\Users\OR\Pictures\Screenshots"
+
+
 class TakeScreenshot(Expression):
-    def __init__(self, location: Expression = TerminalExpression(r"C:\Users\OR\Pictures\Screenshots"),
+    def __init__(self, location: Expression = TerminalExpression(SCREENSHOTS_FOLDER),
                  name: Expression = Concatenate(TerminalExpression("Shortcuts_screenshot_"), GetSystemTime()),
                  extension: Expression = TerminalExpression('png')):
         self.location = location

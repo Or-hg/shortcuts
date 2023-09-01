@@ -31,6 +31,7 @@ from shortcuts.system.get_battery import GetBattery
 from shortcuts.system.get_system_time import GetSystemTime
 from shortcuts.system.is_computer_plugged import IsComputerPlugged
 from shortcuts.system.take_screenshot import TakeScreenshot
+from shortcuts.system.detect_screenshot_taken import DetectScreenshotTaken
 
 from shortcuts.music.music_play_pause import MusicPlayPause
 from shortcuts.music.get_volume import GetVolume
