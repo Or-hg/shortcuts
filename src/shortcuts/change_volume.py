@@ -2,8 +2,6 @@ from shortcuts import Expression
 from typing import Any
 from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 import ctypes
-from ctypes import cast, POINTER
-from comtypes import CLSCTX_ALL
 
 
 MIN_VOLUME = 0
@@ -44,14 +42,3 @@ class ChangeVolume(Expression):
         for device in all_devices:
             interface = device.EndpointVolume.QueryInterface(IAudioEndpointVolume)
             interface.SetMasterVolumeLevelScalar(volume / 100, None)
-
-    @staticmethod
-    def get_volume():
-        """Get the system volume."""
-        ctypes.windll.ole32.CoInitialize(0)
-
-        speakers = AudioUtilities.GetSpeakers()
-        interface = speakers.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-        volume = cast(interface, POINTER(IAudioEndpointVolume))
-
-        return int(volume.GetMasterVolumeLevelScalar() * 100)
