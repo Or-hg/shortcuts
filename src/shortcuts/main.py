@@ -8,12 +8,19 @@ from shortcuts import (DetectAppFocus, TerminalExpression, ChangeVolume, MsgBox,
                        And, Or, IsWindowOpen)
 
 VOLUME = 10
+SPOTIFY = 'spotify'
+YOUTUBE = 'youtube'
+WAS_SPOTIFY_PLAYING = 'was spotify playing'
 
 time.sleep(3)
 
-DetectAppFocus(TerminalExpression("spotify"), ChangeVolume(TerminalExpression(VOLUME))).execute()
+# When switching to spotify, change volume
+DetectAppFocus(TerminalExpression(SPOTIFY), ChangeVolume(TerminalExpression(VOLUME))).execute()
 
-DetectWindowFocus(TerminalExpression("youtube"), ChangeVolume(TerminalExpression(VOLUME))).execute()
+# When switching to youtube, change volume
+DetectWindowFocus(TerminalExpression(YOUTUBE), ChangeVolume(TerminalExpression(VOLUME))).execute()
 
-DetectWindowFocus(TerminalExpression("youtube"), If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause()),
-                  If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause())).execute()
+# When switching to youtube, if spotify is playing music, stop it.
+DetectWindowFocus(TerminalExpression(YOUTUBE),
+                  If(And(IsAppRunning(TerminalExpression(SPOTIFY)), Not(IsWindowOpen(TerminalExpression(SPOTIFY)))),
+                  MusicPlayPause())).execute()
