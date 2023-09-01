@@ -4,7 +4,8 @@ from shortcuts import (DetectAppFocus, TerminalExpression, ChangeVolume, MsgBox,
                        DetectWindowFocus, WhatsappMessage, IsAppRunning, GetBattery,
                        IsComputerPlugged, OpenApp, MusicPlayPause, If, RunFile,
                        While, Not, GetVolume, SetVariable, GetVariable, Wait,
-                       Concatenate, Execute, GetSystemTime, TakeScreenshot, ExpressionsBlock)
+                       Concatenate, Execute, GetSystemTime, TakeScreenshot, ExpressionsBlock,
+                       And)
 
 VOLUME = 10
 
