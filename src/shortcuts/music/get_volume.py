@@ -8,7 +8,7 @@ from comtypes import CLSCTX_ALL
 
 class GetVolume(Expression):
     def execute(self, context: Any = None) -> Any:
-        """Get the system volume."""
+        """Get the system music."""
         ctypes.windll.ole32.CoInitialize(0)
 
         speakers = AudioUtilities.GetSpeakers()

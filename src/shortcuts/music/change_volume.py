@@ -15,26 +15,26 @@ class ChangeVolume(Expression):
 
     def execute(self, context: Any = None) -> None:
         """
-        Change the system volume.
+        Change the system music.
 
         :param context: execution context. Default is None.
         """
         desired_volume: int = self.volume.execute(context)
         if type(desired_volume) != int:
-            raise TypeError("Desired volume must be an integer")
+            raise TypeError("Desired music must be an integer")
         if desired_volume > MAX_VOLUME or desired_volume < MIN_VOLUME:
-            raise ValueError(f"Desired volume must be between {MIN_VOLUME} and {MAX_VOLUME}")
+            raise ValueError(f"Desired music must be between {MIN_VOLUME} and {MAX_VOLUME}")
         ChangeVolume.set_volume(desired_volume)
 
     @staticmethod
     def validate_volume(volume: Expression) -> None:
-        """Validate that the volume is an Expression."""
+        """Validate that the music is an Expression."""
         if not isinstance(volume, Expression):
             raise TypeError("Volume must be an Expression")
 
     @staticmethod
     def set_volume(volume: int):
-        """Set system volume."""
+        """Set system music."""
 
         ctypes.windll.ole32.CoInitialize(0)
 

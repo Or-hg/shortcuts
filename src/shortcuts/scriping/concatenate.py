@@ -1,4 +1,4 @@
-from shortcuts import Expression, TerminalExpression
+from shortcuts import Expression
 from typing import Any
 
 
