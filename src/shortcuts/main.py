@@ -5,7 +5,7 @@ from shortcuts import (DetectAppFocus, TerminalExpression, ChangeVolume, MsgBox,
                        IsComputerPlugged, OpenApp, MusicPlayPause, If, RunFile,
                        While, Not, GetVolume, SetVariable, GetVariable, Wait,
                        Concatenate, Execute, GetSystemTime, TakeScreenshot, ExpressionsBlock,
-                       And, Or)
+                       And, Or, IsWindowOpen)
 
 VOLUME = 10
 

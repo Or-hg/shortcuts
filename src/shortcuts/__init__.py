@@ -8,6 +8,7 @@ from .whatsapp_message import WhatsappMessage
 
 from shortcuts.windows.window_mgr import WindowMgr
 from shortcuts.windows.detect_window_focus import DetectWindowFocus
+from shortcuts.windows.is_window_open import IsWindowOpen
 
 from shortcuts.apps.is_app_running import IsAppRunning
 from shortcuts.apps.detect_app_focus import DetectAppFocus
