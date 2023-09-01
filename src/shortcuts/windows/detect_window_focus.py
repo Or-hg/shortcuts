@@ -7,7 +7,7 @@ import threading
 SLEEP = 1
 
 
-class WindowFocus(Expression):
+class DetectWindowFocus(Expression):
     def __init__(self, window_name: Expression, action: Expression, blur_action: Expression = None):
         self.window_name = window_name
         self.action = action

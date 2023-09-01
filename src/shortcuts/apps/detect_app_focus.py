@@ -8,7 +8,7 @@ import threading
 SLEEP = 1
 
 
-class AppFocus(Expression):
+class DetectAppFocus(Expression):
     def __init__(self, app_name: Expression, action: Expression, blur_action: Expression = None):
         self.app_name = app_name
         self.action = action

@@ -1,7 +1,7 @@
 import time
 
-from shortcuts import (AppFocus, TerminalExpression, ChangeVolume, MsgBox,
-                       WindowFocus, WhatsappMessage, IsAppRunning, GetBattery,
+from shortcuts import (DetectAppFocus, TerminalExpression, ChangeVolume, MsgBox,
+                       DetectWindowFocus, WhatsappMessage, IsAppRunning, GetBattery,
                        IsComputerPlugged, OpenApp, MusicPlayPause, If, RunFile,
                        While, Not, GetVolume, SetVariable, GetVariable, Wait,
                        Concatenate, Execute, GetSystemTime, TakeScreenshot)
@@ -10,9 +10,9 @@ VOLUME = 10
 
 time.sleep(3)
 
-AppFocus(TerminalExpression("spotify"), ChangeVolume(TerminalExpression(VOLUME))).execute()
+DetectAppFocus(TerminalExpression("spotify"), ChangeVolume(TerminalExpression(VOLUME))).execute()
 
-WindowFocus(TerminalExpression("youtube"), ChangeVolume(TerminalExpression(VOLUME))).execute()
+DetectWindowFocus(TerminalExpression("youtube"), ChangeVolume(TerminalExpression(VOLUME))).execute()
 
-WindowFocus(TerminalExpression("youtube"), If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause()),
-            If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause())).execute()
+DetectWindowFocus(TerminalExpression("youtube"), If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause()),
+                  If(IsAppRunning(TerminalExpression("spotify")), MusicPlayPause())).execute()

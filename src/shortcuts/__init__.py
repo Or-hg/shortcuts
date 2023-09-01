@@ -7,10 +7,10 @@ from .msg_box import MsgBox, TITLE as MSG_BOX_TITLE
 from .whatsapp_message import WhatsappMessage
 
 from shortcuts.windows.window_mgr import WindowMgr
-from shortcuts.windows.window_focus import WindowFocus
+from shortcuts.windows.detect_window_focus import DetectWindowFocus
 
 from shortcuts.apps.is_app_running import IsAppRunning
-from shortcuts.apps.app_focus import AppFocus
+from shortcuts.apps.detect_app_focus import DetectAppFocus
 from shortcuts.apps.close_app import CloseApp
 from shortcuts.apps.open_app import OpenApp
 
