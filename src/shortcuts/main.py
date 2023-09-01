@@ -3,7 +3,7 @@ import time
 from shortcuts import (AppFocus, TerminalExpression, ChangeVolume, MsgBox,
                        WindowFocus, WhatsappMessage, IsAppRunning, GetBattery,
                        IsComputerPlugged, OpenApp, MusicPlayPause, If, RunFile,
-                       While, Not, GetVolume, SetVariable, GetVariable)
+                       While, Not, GetVolume, SetVariable, GetVariable, Wait)
 
 VOLUME = 10
 
