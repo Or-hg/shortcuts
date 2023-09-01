@@ -24,6 +24,7 @@ from shortcuts.scriping.not_statement import Not
 from shortcuts.scriping.while_statement import While
 from shortcuts.scriping.expressions_block import ExpressionsBlock
 from shortcuts.scriping.and_statement import And
+from shortcuts.scriping.or_statement import Or
 
 from shortcuts.system.get_battery import GetBattery
 from shortcuts.system.get_system_time import GetSystemTime
