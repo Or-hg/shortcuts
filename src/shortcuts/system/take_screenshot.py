@@ -4,7 +4,7 @@ import pyautogui
 
 
 class TakeScreenshot(Expression):
-    def __init__(self, location: Expression = TerminalExpression(r"C:\Users\OR\Downloads"),
+    def __init__(self, location: Expression = TerminalExpression(r"C:\Users\OR\Pictures\Screenshots"),
                  name: Expression = Concatenate(TerminalExpression("Shortcuts_screenshot_"), GetSystemTime()),
                  extension: Expression = TerminalExpression('png')):
         self.location = location
