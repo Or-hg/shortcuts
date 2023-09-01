@@ -24,3 +24,4 @@ from .wait import Wait
 from .concatenate import Concatenate
 from .execute import Execute
 from .get_system_time import GetSystemTime
+from .take_screenshot import TakeScreenshot

@@ -10,5 +10,5 @@ class GetSystemTime(Expression):
     def execute(self, context: Any = None) -> Any:
         now = datetime.datetime.now()
         if self.only_time.execute(context):
-            return now.time().strftime('%H:%M:%S')
-        return now.strftime('%Y-%m-%d %H:%M:%S')
+            return now.time().strftime('%H-%M-%S')
+        return now.strftime('%Y-%m-%d %H-%M-%S')
