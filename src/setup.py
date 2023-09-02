@@ -6,5 +6,6 @@ setup(
     version="1.0.0",
     packages=find_packages(),
     install_requires=["pycaw", "easygui", "pywin32", "pywinauto",
-                      "psutil", "pyautogui", "comtypes", "watchdog"],
+                      "psutil", "pyautogui", "comtypes", "watchdog",
+                      "keyboard"],
 )

@@ -11,6 +11,7 @@ VOLUME = 10
 SPOTIFY = 'spotify'
 YOUTUBE = 'youtube'
 WAS_SPOTIFY_PLAYING = 'was spotify playing'
+WHATSAPP = "whatsapp"
 
 time.sleep(3)
 
@@ -22,5 +23,7 @@ DetectWindowFocus(TerminalExpression(YOUTUBE), ChangeVolume(TerminalExpression(V
 
 # When switching to youtube, if spotify is playing music, stop it.
 DetectWindowFocus(TerminalExpression(YOUTUBE),
-                  If(And(IsAppRunning(TerminalExpression(SPOTIFY)), Not(IsWindowOpen(TerminalExpression(SPOTIFY)))),
-                  MusicPlayPause())).execute()
+                  If(And(IsAppRunning(TerminalExpression(SPOTIFY)), Not(IsWindowOpen(TerminalExpression(SPOTIFY)))), MusicPlayPause())).execute()
+
+# When taking a screenshot - open whatsapp
+DetectScreenshotTaken(OpenApp(TerminalExpression(WHATSAPP))).execute()
