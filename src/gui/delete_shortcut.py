@@ -9,9 +9,10 @@ from shortcuts import *
 from functools import partial
 from typing import List
 
+from gui.add_shortcut import FILE
 
 SHORTCUTS = "shortcuts"
-TITLE = "Add shortcut"
+TITLE = "Delete shortcut"
 FONT = "Ariel"
 FONT_SIZE = 10
 SAVE_STR = "Save"
@@ -64,7 +65,7 @@ class DeleteShortcut(QMainWindow):
         if not DeleteShortcut.assert_name_not_empty(shortcut_to_delete):
             return
 
-        with open(r"C:\Users\OR\Desktop\test.py") as f:
+        with open(FILE) as f:
             lines = f.readlines()
 
         if not DeleteShortcut.assert_shortcut_exits(shortcut_to_delete, lines):
@@ -86,7 +87,7 @@ class DeleteShortcut(QMainWindow):
         for line in lines_to_delete:
             lines.remove(line)
 
-        with open(r"C:\Users\OR\Desktop\test.py", 'w') as f:
+        with open(FILE, 'w') as f:
             f.writelines(lines)
 
         msg = QMessageBox()

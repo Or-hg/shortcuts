@@ -15,6 +15,7 @@ TITLE = "Add shortcut"
 FONT = "Ariel"
 FONT_SIZE = 10
 SAVE_STR = "Save"
+FILE = r"C:\Users\OR\Desktop\test.py"
 
 
 class AddShortcutWindow(QMainWindow):
@@ -114,7 +115,7 @@ class AddShortcutWindow(QMainWindow):
             msg.exec_()
             return
 
-        with open(r"C:\Users\OR\Desktop\test.py") as f:
+        with open(FILE) as f:
             if f"# name - {name}\n" in f.readlines():
                 msg = QMessageBox()
                 msg.setIcon(QMessageBox.Critical)
@@ -124,7 +125,7 @@ class AddShortcutWindow(QMainWindow):
                 msg.exec_()
                 return
 
-        with open(r"C:\Users\OR\Desktop\test.py", 'a') as f:
+        with open(FILE, 'a') as f:
             f.write(f"# name - {name}\n")
             f.write(f"{self.shortcut_box.text()}.execute()\n\n")
 
