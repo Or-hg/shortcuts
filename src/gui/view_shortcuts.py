@@ -1,7 +1,7 @@
 import sys
-from PyQt5.QtWidgets import (QMainWindow, QApplication, QListWidget,
+from PyQt5.QtWidgets import (QMainWindow, QApplication, QTableWidget, QTableWidgetItem,
                              QWidget, QPushButton, QAction, QGridLayout,
-                             QLineEdit, QMessageBox, QLabel)
+                             QLineEdit, QMessageBox, QLabel, QVBoxLayout, QAbstractItemView)
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import pyqtSlot
 import inspect
@@ -23,8 +23,11 @@ class ViewShortcuts(QMainWindow):
 
     def __init__(self):
         super().__init__()
-        self.shortcuts_list = None
+        self.shortcuts_table = None
         self.shortcuts_dict = None
+        self.layout = QVBoxLayout()
+        self.layout.setContentsMargins(0, 0, 0, 0)
+        self.setLayout(self.layout)
         self.init_ui()
 
     def init_ui(self):
@@ -42,21 +45,30 @@ class ViewShortcuts(QMainWindow):
         self.shortcuts_dict = self.get_shortcuts()
 
         # Create shortcuts list
-        self.create_shortcuts_list()
-        self.shortcuts_list.clicked.connect(self.on_click_list)
+        self.create_shortcuts_table()
+        # self.shortcuts_list.clicked.connect(self.on_click_list)
 
-    def create_shortcuts_list(self):
-        self.shortcuts_list = QListWidget()
+    def create_shortcuts_table(self):
+        self.shortcuts_table = QTableWidget(self)
+        self.setCentralWidget(self.shortcuts_table)
+
+        self.shortcuts_table.setColumnCount(2)
+        self.shortcuts_table.setRowCount(len(self.shortcuts_dict))
+
+        self.shortcuts_table.setHorizontalHeaderLabels(["name", "shortcut"])
+
+        row = 0
         for name, shortcut in self.shortcuts_dict.items():
-            self.shortcuts_list.addItem(name)
+            self.shortcuts_table.setItem(row, 0, QTableWidgetItem(name))
+            self.shortcuts_table.setItem(row, 1, QTableWidgetItem(shortcut))
+            row += 1
 
-        self.shortcuts_list.setGeometry(650, 200, 600, 600)
+        self.shortcuts_table.setGeometry(650, 200, 600, 600)
+        self.shortcuts_table.resizeRowsToContents()
+        self.shortcuts_table.resizeColumnsToContents()
+        self.shortcuts_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
-        self.layout().addWidget(self.shortcuts_list)
-
-    def on_click_list(self, qmodelindex):
-        item = self.shortcuts_list.currentItem()
-        QMessageBox.information(self, "Info", self.shortcuts_dict[item.text()])
+        self.layout.addWidget(self.shortcuts_table)
 
     @staticmethod
     def get_shortcuts():
