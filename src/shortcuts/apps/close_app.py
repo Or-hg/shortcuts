@@ -4,7 +4,7 @@ from typing import Any
 
 
 class CloseApp(Expression):
-    def __init__(self, app):
+    def __init__(self, app: Expression):
         self.app = app
 
     def execute(self, context: Any = None) -> Any:
