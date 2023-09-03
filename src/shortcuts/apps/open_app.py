@@ -9,4 +9,8 @@ class OpenApp(Expression):
 
     def execute(self, context: Any = None) -> Any:
         """Open the app"""
-        AppOpener.open(self.app.execute(context))
+        app = self.app.execute(context)
+        if not isinstance(app, str):
+            raise TypeError("app must be a string")
+
+        AppOpener.open(app)

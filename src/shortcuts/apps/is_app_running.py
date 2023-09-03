@@ -9,8 +9,12 @@ class IsAppRunning(Expression):
 
     def execute(self, context: Any = None) -> Any:
         """Check if the app is running"""
+        app = self.app.execute(context)
+        if not isinstance(app, str):
+            raise TypeError("app must be a string")
+
         processes = (i.name().lower() for i in psutil.process_iter())
         for process in processes:
-            if self.app.execute(context).lower() in process:
+            if app.lower() in process:
                 return True
         return False

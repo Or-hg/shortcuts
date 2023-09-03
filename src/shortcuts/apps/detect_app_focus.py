@@ -23,6 +23,9 @@ class DetectAppFocus(Expression):
     def handle_focus(self, context: Any = None) -> Any:
         """When the app is focused, execute action."""
         app = self.app_name.execute(context)
+        if not isinstance(app, str):
+            raise TypeError("app must be a string")
+
         while True:
             while app.lower() not in WindowMgr.get_active_window_process_name().lower():
                 sleep(SLEEP)

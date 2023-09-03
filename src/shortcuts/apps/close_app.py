@@ -9,4 +9,7 @@ class CloseApp(Expression):
 
     def execute(self, context: Any = None) -> Any:
         """Close the app"""
-        AppOpener.close(self.app.execute(context))
+        app = self.app.execute(context)
+        if not isinstance(app, str):
+            raise TypeError("app must be a string")
+        AppOpener.close(app)
