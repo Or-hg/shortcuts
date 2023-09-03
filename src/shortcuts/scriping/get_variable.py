@@ -7,4 +7,7 @@ class GetVariable(Expression):
         self.name = name
 
     def execute(self, context: Any = None) -> Any:
-        return VARIABLES[self.name.execute(context)]
+        name = self.name.execute(context)
+        if not isinstance(name, str):
+            raise TypeError("name must be a string")
+        return VARIABLES[name]

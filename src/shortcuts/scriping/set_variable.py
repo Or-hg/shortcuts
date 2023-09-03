@@ -11,4 +11,7 @@ class SetVariable(Expression):
         self.value = value
 
     def execute(self, context: Any = None) -> Any:
-        VARIABLES[self.name.execute(context)] = self.value.execute(context)
+        name = self.name.execute(context)
+        if not isinstance(name, str):
+            raise TypeError("name must be a string")
+        VARIABLES[name] = self.value.execute(context)

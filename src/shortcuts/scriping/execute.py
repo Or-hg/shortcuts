@@ -8,4 +8,7 @@ class Execute(Expression):
         self.command = command
 
     def execute(self, context: Any = None) -> Any:
-        return exec(self.command.execute(context))
+        command = self.command.execute(context)
+        if not isinstance(command, str):
+            raise TypeError("command must be a string")
+        return exec(command)
