@@ -14,4 +14,12 @@ class RunFile(Expression):
 
     def execute(self, context: Any = None) -> Any:
         """Run the file"""
-        subprocess.run(self.args_list.execute(context), shell=True)
+        args = self.args_list.execute(context)
+        if not isinstance(args, list):
+            raise TypeError("args_list must be a string")
+
+        for arg in args:
+            if not isinstance(arg, str):
+                raise TypeError("args_list must be a list of strings")
+
+        subprocess.run(args, shell=True)

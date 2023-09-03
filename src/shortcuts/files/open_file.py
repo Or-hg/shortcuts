@@ -9,4 +9,8 @@ class OpenFile(Expression):
 
     def execute(self, context: Any = None) -> Any:
         """Open the file in its default app"""
-        startfile(self.file.execute(context))
+        file = self.file.execute(context)
+        if not isinstance(file, str):
+            raise TypeError("file must be a string")
+
+        startfile(file)
