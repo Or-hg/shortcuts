@@ -20,7 +20,7 @@ class ChangeVolume(Expression):
         :param context: execution context. Default is None.
         """
         desired_volume: int = self.volume.execute(context)
-        if type(desired_volume) != int:
+        if not isinstance(desired_volume, int):
             raise TypeError("Desired music must be an integer")
         if desired_volume > MAX_VOLUME or desired_volume < MIN_VOLUME:
             raise ValueError(f"Desired music must be between {MIN_VOLUME} and {MAX_VOLUME}")
