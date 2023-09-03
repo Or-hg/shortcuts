@@ -57,6 +57,7 @@ class DeleteShortcutWindow(QMainWindow):
         self.delete_button.setFont(QFont(FONT, FONT_SIZE))
         self.delete_button.setGeometry(50, name_top + 100, 100, 50)
         self.delete_button.clicked.connect(self.on_click_delete)
+        self.delete_button.adjustSize()
 
     @pyqtSlot()
     def on_click_delete(self):

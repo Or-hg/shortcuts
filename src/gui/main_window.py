@@ -49,6 +49,7 @@ class MainWindow(QMainWindow):
         self.welcome_label.setFont(font)
         self.welcome_label.setGeometry(650, 100, 600, 50)
         self.welcome_label.setText("Welcome to Shortcuts!")
+        self.welcome_label.adjustSize()
 
     def create_add_shortcut_button(self):
         self.add_shortcut_button = QPushButton(self)
@@ -56,6 +57,7 @@ class MainWindow(QMainWindow):
         self.add_shortcut_button.setGeometry(400, 300, 200, 50)
         self.add_shortcut_button.setText("Add Shortcut")
         self.add_shortcut_button.clicked.connect(self.on_click_add_shortcut)
+        self.add_shortcut_button.adjustSize()
 
     def create_delete_shortcut_button(self):
         self.delete_shortcut_button = QPushButton(self)
@@ -63,6 +65,7 @@ class MainWindow(QMainWindow):
         self.delete_shortcut_button.setGeometry(850, 300, 200, 50)
         self.delete_shortcut_button.setText("Delete Shortcut")
         self.delete_shortcut_button.clicked.connect(self.on_click_delete_shortcut)
+        self.delete_shortcut_button.adjustSize()
 
     def create_view_shortcuts_button(self):
         self.view_shortcuts_button = QPushButton(self)
@@ -70,6 +73,7 @@ class MainWindow(QMainWindow):
         self.view_shortcuts_button.setGeometry(1300, 300, 200, 50)
         self.view_shortcuts_button.setText("View Shortcuts")
         self.view_shortcuts_button.clicked.connect(self.on_click_view_shortcuts)
+        self.view_shortcuts_button.adjustSize()
 
     def on_click_add_shortcut(self):
         self.add_shortcut_window = AddShortcutWindow()

@@ -24,6 +24,7 @@ class AddShortcutWindow(QMainWindow):
         super().__init__()
         self.shortcut_box = None
         self.save_button = None
+        self.description_box = None
         self.name_box = None
         self.init_ui(AddShortcutWindow.get_actions())
 
@@ -38,8 +39,11 @@ class AddShortcutWindow(QMainWindow):
         # Create name box
         name_box_top, name_box_height = self.create_name_box()
 
+        # Create description box
+        description_box_top, description_box_height = self.create_description_box(name_box_top, name_box_height)
+
         # Create shortcut box
-        shortcuts_box_top, shortcuts_box_height = self.create_shortcut_box(name_box_top, name_box_height)
+        shortcuts_box_top, shortcuts_box_height = self.create_shortcut_box(description_box_top, description_box_height)
 
         last_action_button_top = self.create_action_buttons(actions, 50, shortcuts_box_top + shortcuts_box_height + 30)
 
@@ -58,9 +62,21 @@ class AddShortcutWindow(QMainWindow):
 
         return name_box_top, name_box_height
 
-    def create_shortcut_box(self, name_box_top, name_box_height):
-        shortcuts_box_top = name_box_height + name_box_top + 30
-        shortcuts_box_height = name_box_height
+    def create_description_box(self, name_box_top, name_box_height):
+        description_box_top = name_box_height + name_box_top + 30
+        description_box_height = name_box_height
+
+        self.description_box = QPlainTextEdit(self)
+        self.description_box.setPlaceholderText("Description")
+        self.description_box.move(20, description_box_top)
+        self.description_box.resize(self.frameGeometry().width() - 40, description_box_height)
+        self.description_box.setFont(QFont(FONT, FONT_SIZE))
+
+        return description_box_top, description_box_height
+
+    def create_shortcut_box(self, description_box_top, description_box_height):
+        shortcuts_box_top = description_box_height + description_box_top + 30
+        shortcuts_box_height = description_box_height
 
         self.shortcut_box = QPlainTextEdit(self)
         self.shortcut_box.setPlaceholderText("Shortcut")
@@ -75,6 +91,7 @@ class AddShortcutWindow(QMainWindow):
         self.save_button.setFont(QFont(FONT, FONT_SIZE))
         self.save_button.setGeometry(50, last_action_button_top + 200, 100, 50)
         self.save_button.clicked.connect(self.on_click_save)
+        self.save_button.adjustSize()
 
     def create_action_buttons(self, actions: List[str], left, top):
         width = 200
@@ -87,6 +104,7 @@ class AddShortcutWindow(QMainWindow):
             button = QPushButton(button_name, self)
             button.setFont(QFont('Arial', 10))
             button.setGeometry(curr_left, top, width, height)
+            button.adjustSize()
 
             def insert_action(name):
                 parameters_dict = inspect.signature(eval(name).__init__).parameters.keys()
@@ -133,8 +151,15 @@ class AddShortcutWindow(QMainWindow):
                 f.write("\n")
                 f.write("\n")
 
+        description = self.description_box.toPlainText()
+        description_lines = description.split("\n")
+
         with open(FILE, 'a') as f:
             f.write(f"# name - {name}\n")
+            if len(description_lines) != 0:
+                for description_line in description_lines:
+                    if description_line != "":
+                        f.write(f"# {description_line}\n")
             f.write(f"{self.shortcut_box.toPlainText()}.execute()\n\n")
 
         msg = QMessageBox()
