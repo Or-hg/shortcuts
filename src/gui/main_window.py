@@ -8,7 +8,7 @@ import inspect
 from shortcuts import *
 from functools import partial
 from typing import List
-from gui import AddShortcutWindow, FONT, FONT_SIZE, DeleteShortcut, ViewShortcuts
+from gui import AddShortcutWindow, FONT, FONT_SIZE, DeleteShortcutWindow, ViewShortcutsWindow
 
 
 TITLE = "Shortcuts GUI"
@@ -22,9 +22,9 @@ class MainWindow(QMainWindow):
         self.view_shortcuts_button = None
         self.welcome_label = None
         self.init_ui()
-        self.add_shortcut_window = AddShortcutWindow()
-        self.delete_shortcut_window = DeleteShortcut()
-        self.view_shortcuts_window = ViewShortcuts()
+        self.add_shortcut_window = None
+        self.delete_shortcut_window = None
+        self.view_shortcuts_window = None
 
     def init_ui(self):
         self.setWindowTitle(TITLE)
@@ -72,12 +72,15 @@ class MainWindow(QMainWindow):
         self.view_shortcuts_button.clicked.connect(self.on_click_view_shortcuts)
 
     def on_click_add_shortcut(self):
+        self.add_shortcut_window = AddShortcutWindow()
         self.add_shortcut_window.showMaximized()
 
     def on_click_delete_shortcut(self):
+        self.delete_shortcut_window = DeleteShortcutWindow()
         self.delete_shortcut_window.showMaximized()
 
     def on_click_view_shortcuts(self):
+        self.view_shortcuts_window = ViewShortcutsWindow()
         self.view_shortcuts_window.showMaximized()
 
 

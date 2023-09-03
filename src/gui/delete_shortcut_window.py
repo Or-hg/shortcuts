@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (QMainWindow, QApplication,
                              QWidget, QPushButton, QAction,
-                             QLineEdit, QMessageBox, QLabel)
+                             QLineEdit, QMessageBox, QLabel, QPlainTextEdit)
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import pyqtSlot
 import inspect
@@ -9,7 +9,7 @@ from shortcuts import *
 from functools import partial
 from typing import List
 
-from gui.add_shortcut import FILE
+from gui.add_shortcut_window import FILE
 
 SHORTCUTS = "shortcuts"
 TITLE = "Delete shortcut"
@@ -18,7 +18,7 @@ FONT_SIZE = 10
 SAVE_STR = "Save"
 
 
-class DeleteShortcut(QMainWindow):
+class DeleteShortcutWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -44,7 +44,7 @@ class DeleteShortcut(QMainWindow):
         name_box_top = 20
         name_box_height = 60
 
-        self.name_box = QLineEdit(self)
+        self.name_box = QPlainTextEdit(self)
         self.name_box.setPlaceholderText("Name")
         self.name_box.move(20, name_box_top)
         self.name_box.resize(self.frameGeometry().width() - 40, name_box_height)
@@ -60,15 +60,15 @@ class DeleteShortcut(QMainWindow):
 
     @pyqtSlot()
     def on_click_delete(self):
-        shortcut_to_delete = self.name_box.text()
+        shortcut_to_delete = self.name_box.toPlainText()
 
-        if not DeleteShortcut.assert_name_not_empty(shortcut_to_delete):
+        if not DeleteShortcutWindow.assert_name_not_empty(shortcut_to_delete):
             return
 
         with open(FILE) as f:
             lines = f.readlines()
 
-        if not DeleteShortcut.assert_shortcut_exits(shortcut_to_delete, lines):
+        if not DeleteShortcutWindow.assert_shortcut_exits(shortcut_to_delete, lines):
             return
 
         lines_to_delete = []
@@ -122,6 +122,6 @@ class DeleteShortcut(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = DeleteShortcut()
+    ex = DeleteShortcutWindow()
     ex.showMaximized()
     sys.exit(app.exec_())

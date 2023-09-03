@@ -9,7 +9,7 @@ from shortcuts import *
 from functools import partial
 from typing import List
 
-from gui.add_shortcut import FILE
+from gui.add_shortcut_window import FILE
 
 
 SHORTCUTS = "shortcuts"
@@ -19,7 +19,7 @@ FONT_SIZE = 10
 SAVE_STR = "Save"
 
 
-class ViewShortcuts(QMainWindow):
+class ViewShortcutsWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
@@ -44,9 +44,8 @@ class ViewShortcuts(QMainWindow):
         # get shortcuts list
         self.shortcuts_dict = self.get_shortcuts()
 
-        # Create shortcuts list
+        # Create shortcuts table
         self.create_shortcuts_table()
-        # self.shortcuts_list.clicked.connect(self.on_click_list)
 
     def create_shortcuts_table(self):
         self.shortcuts_table = QTableWidget(self)
@@ -78,7 +77,7 @@ class ViewShortcuts(QMainWindow):
         shortcuts_dict = {}
 
         for line in lines.split("# name - "):
-            if "\n" in line:
+            if "\n" in line and "import" not in line:
                 name = line[:line.index("\n")]
                 shortcut = line[line.index("\n") + 1: -2]
 
@@ -89,6 +88,6 @@ class ViewShortcuts(QMainWindow):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    ex = ViewShortcuts()
+    ex = ViewShortcutsWindow()
     ex.showMaximized()
     sys.exit(app.exec_())

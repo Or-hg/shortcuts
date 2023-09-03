@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import (QMainWindow, QApplication,
                              QWidget, QPushButton, QAction,
-                             QLineEdit, QMessageBox, QLabel)
+                             QLineEdit, QMessageBox, QLabel, QPlainTextEdit )
 from PyQt5.QtGui import QIcon, QFont
 from PyQt5.QtCore import pyqtSlot
 import inspect
@@ -50,7 +50,7 @@ class AddShortcutWindow(QMainWindow):
         name_box_top = 20
         name_box_height = 60
 
-        self.name_box = QLineEdit(self)
+        self.name_box = QPlainTextEdit(self)
         self.name_box.setPlaceholderText("Name")
         self.name_box.move(20, name_box_top)
         self.name_box.resize(self.frameGeometry().width() - 40, name_box_height)
@@ -62,7 +62,7 @@ class AddShortcutWindow(QMainWindow):
         shortcuts_box_top = name_box_height + name_box_top + 30
         shortcuts_box_height = name_box_height
 
-        self.shortcut_box = QLineEdit(self)
+        self.shortcut_box = QPlainTextEdit(self)
         self.shortcut_box.setPlaceholderText("Shortcut")
         self.shortcut_box.move(20, shortcuts_box_top)
         self.shortcut_box.resize(self.frameGeometry().width() - 40, shortcuts_box_height)
@@ -92,7 +92,7 @@ class AddShortcutWindow(QMainWindow):
                 parameters_dict = inspect.signature(eval(name).__init__).parameters.keys()
                 parameters = ", ".join(parameters_dict)
                 parameters = parameters.replace("self, ", "")
-                self.shortcut_box.insert(f"{name}({parameters})")
+                self.shortcut_box.insertPlainText(f"{name}({parameters})")
 
             button.clicked.connect(partial(insert_action, button_name))
             curr_left += width + space_width
@@ -105,7 +105,7 @@ class AddShortcutWindow(QMainWindow):
 
     @pyqtSlot()
     def on_click_save(self):
-        name = self.name_box.text()
+        name = self.name_box.toPlainText()
         if name == "":
             msg = QMessageBox()
             msg.setIcon(QMessageBox.Critical)
@@ -116,18 +116,26 @@ class AddShortcutWindow(QMainWindow):
             return
 
         with open(FILE) as f:
-            if f"# name - {name}\n" in f.readlines():
-                msg = QMessageBox()
-                msg.setIcon(QMessageBox.Critical)
-                msg.setText("Error")
-                msg.setInformativeText(f"Name '{name}' is taken")
-                msg.setWindowTitle("Error")
-                msg.exec_()
-                return
+            lines = f.readlines()
+
+        if f"# name - {name}\n" in lines:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText(f"Name '{name}' is taken")
+            msg.setWindowTitle("Error")
+            msg.exec_()
+            return
+
+        if "from shortcuts import *\n" not in lines:
+            with open(FILE, 'a') as f:
+                f.write("from shortcuts import *\n")
+                f.write("\n")
+                f.write("\n")
 
         with open(FILE, 'a') as f:
             f.write(f"# name - {name}\n")
-            f.write(f"{self.shortcut_box.text()}.execute()\n\n")
+            f.write(f"{self.shortcut_box.toPlainText()}.execute()\n\n")
 
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)
