@@ -24,6 +24,7 @@ class ViewShortcutsWindow(QMainWindow):
 
     def __init__(self):
         super().__init__()
+        self.delete_shortcut_button = None
         self.shortcuts_table = None
         self.shortcuts_dict = None
         self.add_shortcut_button = None
@@ -52,6 +53,9 @@ class ViewShortcutsWindow(QMainWindow):
 
         # Create refresh button
         self.create_refresh_button()
+
+        self.create_delete_shortcut_button()
+        self.delete_shortcut_button.hide()
 
     def create_shortcuts_table(self):
         # get shortcuts list
@@ -83,8 +87,26 @@ class ViewShortcutsWindow(QMainWindow):
         self.shortcuts_table.resizeRowsToContents()
         self.shortcuts_table.resizeColumnsToContents()
         self.shortcuts_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-
+        # self.shortcuts_table.clicked.connect(self.on_table_selection_changed)
+        self.shortcuts_table.selectionModel().selectionChanged.connect(self.on_table_selection_changed)
         self.layout.addWidget(self.shortcuts_table)
+
+    def on_table_selection_changed(self, selected, deselected):
+        if selected.count() > 0:
+            self.delete_shortcut_button.show()
+        else:
+            self.delete_shortcut_button.hide()
+
+    def create_delete_shortcut_button(self):
+        self.delete_shortcut_button = QPushButton(self)
+        self.delete_shortcut_button.setFont(QFont(FONT, 15))
+        self.delete_shortcut_button.setGeometry(1000, self.frameGeometry().height() - 300, 200, 50)
+        self.delete_shortcut_button.setText("Delete shortcut")
+        self.delete_shortcut_button.clicked.connect(self.on_click_delete_shortcut)
+        self.delete_shortcut_button.adjustSize()
+
+    def on_click_delete_shortcut(self):
+        pass
 
     def create_add_shortcut_button(self):
         self.add_shortcut_button = QPushButton(self)
@@ -131,6 +153,8 @@ class ViewShortcutsWindow(QMainWindow):
             description = ""
             while line.startswith("#"):
                 description += line.lstrip("#").lstrip()
+                if i == len(lines) - 1:
+                    break
                 i += 1
                 line = lines[i].lstrip("\n").lstrip()
 

@@ -61,8 +61,10 @@ class DeleteShortcutWindow(QMainWindow):
 
     @pyqtSlot()
     def on_click_delete(self):
-        shortcut_to_delete = self.name_box.toPlainText()
+        DeleteShortcutWindow.delete_shortcut(self.name_box.toPlainText())
 
+    @staticmethod
+    def delete_shortcut(shortcut_to_delete):
         if not DeleteShortcutWindow.assert_name_not_empty(shortcut_to_delete):
             return
 
