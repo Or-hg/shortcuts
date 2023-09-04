@@ -8,6 +8,7 @@ import inspect
 from shortcuts import *
 from functools import partial
 from typing import List
+from gui import AddShortcutWindow
 
 from gui.add_shortcut_window import FILE
 
@@ -25,6 +26,8 @@ class ViewShortcutsWindow(QMainWindow):
         super().__init__()
         self.shortcuts_table = None
         self.shortcuts_dict = None
+        self.add_shortcut_button = None
+        self.add_shortcut_window = None
         self.layout = QVBoxLayout()
         self.layout.setContentsMargins(0, 0, 0, 0)
         self.setLayout(self.layout)
@@ -41,13 +44,19 @@ class ViewShortcutsWindow(QMainWindow):
 
         self.setGeometry(0, 0, screen_rect.width() - 10, screen_rect.height())
 
-        # get shortcuts list
-        self.shortcuts_dict = self.get_shortcuts()
-
         # Create shortcuts table
         self.create_shortcuts_table()
 
+        # Create add shortcut button
+        self.create_add_shortcut_button()
+
+        # Create refresh button
+        self.create_refresh_button()
+
     def create_shortcuts_table(self):
+        # get shortcuts list
+        self.shortcuts_dict = self.get_shortcuts()
+
         self.shortcuts_table = QTableWidget(self)
         self.setCentralWidget(self.shortcuts_table)
 
@@ -56,18 +65,49 @@ class ViewShortcutsWindow(QMainWindow):
 
         self.shortcuts_table.setHorizontalHeaderLabels(["name", "shortcut"])
 
+        self.shortcuts_table.setFont(QFont('Ariel', 10))
+
+        x = self.size().width()
+        y = self.size().height()
+
+        self.shortcuts_table.setGeometry(100, 50, self.frameGeometry().width() - 200,
+                                         self.frameGeometry().height() - 400)
+
         row = 0
         for name, shortcut in self.shortcuts_dict.items():
             self.shortcuts_table.setItem(row, 0, QTableWidgetItem(name))
             self.shortcuts_table.setItem(row, 1, QTableWidgetItem(shortcut))
             row += 1
 
-        self.shortcuts_table.setGeometry(650, 200, 600, 600)
         self.shortcuts_table.resizeRowsToContents()
         self.shortcuts_table.resizeColumnsToContents()
         self.shortcuts_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
 
         self.layout.addWidget(self.shortcuts_table)
+
+    def create_add_shortcut_button(self):
+        self.add_shortcut_button = QPushButton(self)
+        self.add_shortcut_button.setFont(QFont(FONT, 15))
+        self.add_shortcut_button.setGeometry(100, self.frameGeometry().height() - 300, 200, 50)
+        self.add_shortcut_button.setText("Add shortcut")
+        self.add_shortcut_button.clicked.connect(self.on_click_add_shortcut)
+        self.add_shortcut_button.adjustSize()
+
+    def on_click_add_shortcut(self):
+        self.add_shortcut_window = AddShortcutWindow()
+        self.add_shortcut_window.showMaximized()
+
+    def create_refresh_button(self):
+        self.add_shortcut_button = QPushButton(self)
+        self.add_shortcut_button.setFont(QFont(FONT, 15))
+        self.add_shortcut_button.setGeometry(500, self.frameGeometry().height() - 300, 200, 50)
+        self.add_shortcut_button.setText("Refresh")
+        self.add_shortcut_button.clicked.connect(self.on_click_refresh)
+        self.add_shortcut_button.adjustSize()
+
+    def on_click_refresh(self):
+        self.layout.removeWidget(self.shortcuts_table)
+        self.create_shortcuts_table()
 
     @staticmethod
     def get_shortcuts():
