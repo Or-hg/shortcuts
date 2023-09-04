@@ -60,10 +60,10 @@ class ViewShortcutsWindow(QMainWindow):
         self.shortcuts_table = QTableWidget(self)
         self.setCentralWidget(self.shortcuts_table)
 
-        self.shortcuts_table.setColumnCount(2)
+        self.shortcuts_table.setColumnCount(3)
         self.shortcuts_table.setRowCount(len(self.shortcuts_dict))
 
-        self.shortcuts_table.setHorizontalHeaderLabels(["name", "shortcut"])
+        self.shortcuts_table.setHorizontalHeaderLabels(["name", "description", "shortcut"])
 
         self.shortcuts_table.setFont(QFont('Ariel', 10))
 
@@ -74,9 +74,10 @@ class ViewShortcutsWindow(QMainWindow):
                                          self.frameGeometry().height() - 400)
 
         row = 0
-        for name, shortcut in self.shortcuts_dict.items():
+        for name, (description, shortcut) in self.shortcuts_dict.items():
             self.shortcuts_table.setItem(row, 0, QTableWidgetItem(name))
-            self.shortcuts_table.setItem(row, 1, QTableWidgetItem(shortcut))
+            self.shortcuts_table.setItem(row, 1, QTableWidgetItem(description))
+            self.shortcuts_table.setItem(row, 2, QTableWidgetItem(shortcut))
             row += 1
 
         self.shortcuts_table.resizeRowsToContents()
@@ -112,16 +113,43 @@ class ViewShortcutsWindow(QMainWindow):
     @staticmethod
     def get_shortcuts():
         with open(FILE) as f:
-            lines = f.read()
+            lines = f.readlines()
 
         shortcuts_dict = {}
 
-        for line in lines.split("# name - "):
-            if "\n" in line and "import" not in line:
-                name = line[:line.index("\n")]
-                shortcut = line[line.index("\n") + 1: -2]
+        i = 0
+        while i < len(lines):
+            line = lines[i].lstrip("\n").lstrip()
+            if "# name - " not in line:
+                i += 1
+                continue
 
-                shortcuts_dict[name] = shortcut
+            name = line.lstrip("# name - ")[::-1].lstrip("\n")[::-1]
+            i += 1
+
+            line = lines[i].lstrip("\n").lstrip()
+            description = ""
+            while line.startswith("#"):
+                description += line.lstrip("#").lstrip()
+                i += 1
+                line = lines[i].lstrip("\n").lstrip()
+
+            shortcut = ""
+            while (not line.startswith("#")) and i < len(lines):
+                shortcut += line
+                if i == len(lines) - 1:
+                    break
+                i += 1
+                line = lines[i].lstrip("\n").lstrip()
+
+            shortcuts_dict[name] = (description, shortcut)
+
+        # for line in lines.split("# name - "):
+        #     if "\n" in line and "import" not in line:
+        #         name = line[:line.index("\n")]
+        #         shortcut = line[line.index("\n") + 1: -2]
+        #
+        #         shortcuts_dict[name] = shortcut
 
         return shortcuts_dict
 
