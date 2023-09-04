@@ -145,6 +145,16 @@ class AddShortcutWindow(QMainWindow):
             msg.exec_()
             return
 
+        shortcut = self.shortcut_box.toPlainText()
+        if shortcut == "":
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Critical)
+            msg.setText("Error")
+            msg.setInformativeText(f"Please add a shortcut")
+            msg.setWindowTitle("Error")
+            msg.exec_()
+            return
+
         if "from shortcuts import *\n" not in lines:
             with open(FILE, 'a') as f:
                 f.write("from shortcuts import *\n")
@@ -160,7 +170,7 @@ class AddShortcutWindow(QMainWindow):
                 for description_line in description_lines:
                     if description_line != "":
                         f.write(f"# {description_line}\n")
-            f.write(f"{self.shortcut_box.toPlainText()}.execute()\n\n")
+            f.write(f"{shortcut}.execute()\n\n")
 
         msg = QMessageBox()
         msg.setIcon(QMessageBox.Information)

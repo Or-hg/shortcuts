@@ -137,6 +137,12 @@ class ViewShortcutsWindow(QMainWindow):
         self.create_shortcuts_table()
 
     @staticmethod
+    def remove_prefix(string, prefix):
+        if string.startswith(prefix):
+            return string[len(prefix):]
+        return string
+
+    @staticmethod
     def get_shortcuts():
         with open(FILE) as f:
             lines = f.readlines()
@@ -150,13 +156,13 @@ class ViewShortcutsWindow(QMainWindow):
                 i += 1
                 continue
 
-            name = line.lstrip("# name - ")[::-1].lstrip("\n")[::-1]
+            name = ViewShortcutsWindow.remove_prefix(line, "# name - ")[::-1].lstrip("\n")[::-1]
             i += 1
 
             line = lines[i].lstrip("\n").lstrip()
             description = ""
             while line.startswith("#"):
-                description += line.lstrip("#").lstrip()
+                description += ViewShortcutsWindow.remove_prefix(line, "#").lstrip()
                 if i == len(lines) - 1:
                     break
                 i += 1
