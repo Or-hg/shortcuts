@@ -8,7 +8,7 @@ import inspect
 from shortcuts import *
 from functools import partial
 from typing import List
-from gui import AddShortcutWindow
+from gui import AddShortcutWindow, DeleteShortcutWindow
 
 from gui.add_shortcut_window import FILE
 
@@ -86,8 +86,8 @@ class ViewShortcutsWindow(QMainWindow):
 
         self.shortcuts_table.resizeRowsToContents()
         self.shortcuts_table.resizeColumnsToContents()
+        self.shortcuts_table.setSelectionBehavior(QAbstractItemView.SelectRows)
         self.shortcuts_table.setEditTriggers(QAbstractItemView.NoEditTriggers)
-        # self.shortcuts_table.clicked.connect(self.on_table_selection_changed)
         self.shortcuts_table.selectionModel().selectionChanged.connect(self.on_table_selection_changed)
         self.layout.addWidget(self.shortcuts_table)
 
@@ -106,7 +106,11 @@ class ViewShortcutsWindow(QMainWindow):
         self.delete_shortcut_button.adjustSize()
 
     def on_click_delete_shortcut(self):
-        pass
+        selected_rows = self.shortcuts_table.selectionModel().selectedRows()
+        for row in selected_rows:
+            DeleteShortcutWindow.delete_shortcut(self.shortcuts_table.item(row.row(), 0).text())
+        self.on_click_refresh()
+        self.delete_shortcut_button.hide()
 
     def create_add_shortcut_button(self):
         self.add_shortcut_button = QPushButton(self)
